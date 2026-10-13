@@ -1,0 +1,19 @@
+{
+  "models": {
+    "ctmc_chain.umb": {
+      "branches": 3,
+      "source": "umbi",
+      "states": 3
+    },
+    "dtmc_two_state.umb": {
+      "branches": 3,
+      "source": "umbi",
+      "states": 2
+    },
+    "mdp_grid_3x4.umb": {
+      "branches": 62,
+      "source": "umbi",
+      "states": 10
+    }
+  }
+}
