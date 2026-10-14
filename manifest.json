@@ -1,19 +1,28 @@
 {
   "models": {
     "ctmc_chain.umb": {
-      "branches": 3,
-      "source": "umbi",
-      "states": 3
+      "known_issues": {
+        "ModestCLI": "umbi 0.2.12 writes format-version 0 / revision 1; Modest requires version 1 / revision 0"
+      },
+      "source": "umbi"
+    },
+    "dtmc_initial_not_zero.umb": {
+      "known_issues": {
+        "ModestCLI": "Modest does not support models where state 0 is not the initial state (besides the umbi format version problem)"
+      },
+      "source": "umbi"
     },
     "dtmc_two_state.umb": {
-      "branches": 3,
-      "source": "umbi",
-      "states": 2
+      "known_issues": {
+        "ModestCLI": "umbi 0.2.12 writes format-version 0 / revision 1; Modest requires version 1 / revision 0"
+      },
+      "source": "umbi"
     },
     "mdp_grid_3x4.umb": {
-      "branches": 62,
-      "source": "umbi",
-      "states": 10
+      "known_issues": {
+        "ModestCLI": "umbi 0.2.12 writes format-version 0 / revision 1; Modest requires version 1 / revision 0"
+      },
+      "source": "umbi"
     }
   }
 }
