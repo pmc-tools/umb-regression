@@ -27,7 +27,7 @@ def _two_state_dtmc() -> umbi.ats.SimpleAts:
     """Lazy chain: 0 -> {0: 1/2, 1: 1/2}, 1 absorbing; label `done` on state 1."""
     ats = umbi.ats.SimpleAts()
     ats.time = umbi.ats.TimeType.DISCRETE
-    ats.num_players = 1
+    ats.num_players = 0
     ats.num_states = 2
     ats.initial_states = [0]
     c0 = ats.new_state_choice(state=0)
@@ -44,7 +44,7 @@ def _initial_not_zero() -> umbi.ats.SimpleAts:
     """Chain 0 <- 1 -> 2 with initial state 1 (Modest requires state 0 to be initial)."""
     ats = umbi.ats.SimpleAts()
     ats.time = umbi.ats.TimeType.DISCRETE
-    ats.num_players = 1
+    ats.num_players = 0
     ats.num_states = 3
     ats.initial_states = [1]
     c0 = ats.new_state_choice(state=0)
@@ -102,17 +102,9 @@ def _generated() -> dict[str, umbi.ats.SimpleAts]:
     }
 
 
-# Tolerated reading failures of the umbi-written files, per tool (see tests/test_regression.py).
-KNOWN_ISSUES = {
-    "ModestCLI": "umbi 0.2.12 writes format-version 0 / revision 1; Modest requires version 1 / revision 0",
-}
-# Additional known issues of single models, on top of KNOWN_ISSUES.
-MODEL_ISSUES = {
-    "dtmc_initial_not_zero.umb": {
-        "ModestCLI": "Modest does not support models where state 0 is not the initial state "
-        "(besides the umbi format version problem)",
-    },
-}
+# Tolerated reading failures of the umbi-written files, per model and tool, in addition to the
+# ones the umbtest tool wrappers recognise themselves (see tests/test_regression.py).
+KNOWN_ISSUES: dict[str, dict[str, str]] = {}
 
 
 def main() -> None:
@@ -123,8 +115,9 @@ def main() -> None:
         umbi.ats.write(ats, MODELS / name)
         manifest["models"][name] = {
             "source": "umbi",
-            "known_issues": {**KNOWN_ISSUES, **MODEL_ISSUES.get(name, {})},
         }
+        if name in KNOWN_ISSUES:
+            manifest["models"][name]["known_issues"] = KNOWN_ISSUES[name]
     MANIFEST.write_text(json.dumps(manifest, indent=2, sort_keys=True) + "\n")
 
 
